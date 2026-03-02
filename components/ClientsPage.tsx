@@ -184,6 +184,18 @@ export const ClientsPage: React.FC = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleShareClient = (client: Client) => {
+    const subject = encodeURIComponent(`Contato: ${client.name}`);
+    const body = encodeURIComponent(
+      `Resumo de Contato\n\n` +
+      `Nome: ${client.name}\n` +
+      `Empresa: ${client.companyName || 'Particular'}\n` +
+      `WhatsApp/Telefone: ${client.phone}\n` +
+      `E-mail: ${client.email || 'Não informado'}\n`
+    );
+    window.open(`mailto:?subject=${subject}&body=${body}`);
+  };
+
   return (
     <div className="space-y-8 animate-fadeIn pb-20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -382,9 +394,13 @@ export const ClientsPage: React.FC = () => {
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                       WhatsApp
                    </button>
-                   <button className="flex-1 py-3 bg-white/10 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/20 transition-colors">
+                   <button onClick={() => window.open(`mailto:${selectedClient.email || ''}`)} className="flex-1 py-3 bg-white/10 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/20 transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                       E-mail
+                   </button>
+                   <button onClick={() => handleShareClient(selectedClient)} className="flex-1 py-3 bg-orange-500 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-orange-400 transition-colors shadow-lg shadow-orange-500/30">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>
+                      Compartilhar
                    </button>
                 </div>
              </div>
